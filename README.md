@@ -1,10 +1,6 @@
 # ktlex
 
-Bộ gõ tiếng Việt Telex viết bằng C++17, tích hợp IBus. Đã được người dùng kiểm tra nhập liệu trên Chrome trong môi trường Ubuntu 24.04/GNOME/Wayland; các ứng dụng khác cần được kiểm tra riêng.
-
-Khi gõ Telex, `oo → ô`, `ooo → oo`; tương tự `aaa → aa`, `eee → ee`. Sau khi thoát dấu bằng phím thứ ba, các chữ gõ thêm trong từ được giữ nguyên. Có thể thêm dấu mũ sau phụ âm cuối, ví dụ `nhapaj → nhập`, `bepes → bếp`, `hopoj → hộp`. Phím biến đổi cũng có thể đi sau cụm nguyên âm: `ddaya → đây`, `toio → tôi`, `guiwr → gửi`.
-
-Bộ gõ giữ từ đang nhập trong vùng soạn thảo tạm (preedit), rồi chốt cả từ một lần để tránh lặp hoặc mất chữ khi ứng dụng không thực hiện được yêu cầu xóa/thay văn bản. Bộ gõ gửi thuộc tính không gạch chân, nhưng GNOME/Wayland hoặc ứng dụng vẫn có thể tự gạch chân vùng này.
+Bộ gõ tiếng Việt Telex viết bằng C++17, tích hợp IBus dùng trong Linux/Ubuntu
 
 ## Cài đặt từ GitHub Release
 
@@ -56,37 +52,6 @@ cmake -S . -B build-core -DBUILD_IBUS=OFF
 cmake --build build-core --parallel
 ctest --test-dir build-core --output-on-failure
 ```
-
-## Kiểm thử hồi quy
-
-Các bộ test bao phủ dấu thanh trên 12 nguyên âm, thứ tự gõ dấu/mũ/phụ âm cuối, `gi`/`qu`, chữ hoa/thường, phím lặp để thoát dấu, Backspace và reset. Test tích hợp kiểm tra chốt từ đúng một lần, chọn văn bản, phím tắt, chuyển tiêu điểm, cùng trường hợp ứng dụng bỏ qua yêu cầu xóa hoặc không gửi lại surrounding text.
-
-Có thể bật thêm kiểm thử qua daemon IBus thật trong phiên D-Bus riêng, không nhập vào ứng dụng đang mở:
-
-```sh
-sudo apt install python3-gi gir1.2-ibus-1.0 dbus-daemon ibus
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_IBUS_DBUS_TESTS=ON -DPython3_EXECUTABLE=/usr/bin/python3
-cmake --build build --parallel
-ctest --test-dir build --output-on-failure
-```
-
-Phiên thử có tệp địa chỉ IBus và cấu hình riêng trong thư mục tạm. Các test này không thay thế kiểm thử giao diện trên từng ứng dụng.
-
-## Cập nhật không cần đăng xuất
-
-Cài file `.deb` mới bằng APT. Nếu cài lại gói cùng phiên bản, dùng `--reinstall`, ví dụ với gói tự build:
-
-```sh
-sudo apt install --reinstall ./build/ktlex-0.1.0-Linux.deb
-```
-
-Chốt hết chữ đang soạn, chuyển nguồn nhập sang English, rồi chạy **không dùng sudo**:
-
-```sh
-pkill -x ktlex
-```
-
-Chọn lại **Vietnamese (ktlex)** để IBus khởi chạy executable mới. Nếu lệnh báo không tìm thấy tiến trình thì engine hiện chưa chạy. Nếu chưa nạp lại được, thử `ibus restart`; đăng xuất/đăng nhập là phương án dự phòng.
 
 ## Gỡ cài đặt hoàn toàn
 
