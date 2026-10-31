@@ -1,0 +1,9 @@
+<component>
+<name>org.freedesktop.IBus.Ktlex</name>
+<description>Vietnamese Telex</description>
+<exec>@CMAKE_INSTALL_PREFIX@/libexec/ktlex</exec>
+<version>0.1.0</version>
+<author>ktlex contributors</author>
+<license>Unspecified</license>
+<engines><engine><name>ktlex</name><longname>Vietnamese (ktlex)</longname><language>vi</language><layout>us</layout><description>Vietnamese Telex</description></engine></engines>
+</component>
